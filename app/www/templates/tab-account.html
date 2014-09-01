@@ -1,5 +1,26 @@
 <ion-view title="Account">
   <ion-content class="has-header padding">
-    <h1>Account</h1>
+    <form class="list" ng-submit="processLogin()">
+        <input type="hidden" ng-model="formData._charset_" value="UTF-8"/>
+        <input type="hidden" ng-model="formData.selectedAuthType" value="form"/>
+        <input type="hidden" ng-model="formData.resource" value="/"/>
+
+        <label class="item item-input">
+            <input type="text" placeholder="Username" ng-model="formData.j_username"/>
+        </label>
+
+        <label class="item item-input">
+            <input type="password" placeholder="Password" ng-model="formData.j_password"/>
+        </label>    
+
+        <button type="submit" class="button button-block button-positive">
+            Login
+        </button>
+    </form>
+
+    <pre>
+        {{formData}}
+    </pre>
+
   </ion-content>
 </ion-view>
