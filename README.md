@@ -50,4 +50,4 @@ To verify that the bundle is correctly installed:
 
 ## How to blog
 
-Head to http://localhost:8080/content/espblog/posts.list.html. Use the 'New Post' link on the left to create a new post.
+Head to [http://localhost:8080/content/espblog/*.html](http://localhost:8080/content/espblog/*.html). Use the 'New Post' link on the left to create a new post.
