@@ -1,22 +1,31 @@
 <ion-view title="Account">
   <ion-content class="has-header padding">
-    <form class="list" ng-submit="processLogin()">
-        <label class="item item-input">
-            <input type="text" placeholder="Username" name="j_username" ng-model="formData.j_username"/>
-        </label>
+    <div ng-hide="currentLoggedInUser">
+        <form class="list" ng-submit="processLogin()">
+            <label class="item item-input">
+                <input type="text" placeholder="Username" name="j_username" ng-model="formData.j_username"/>
+            </label>
 
-        <label class="item item-input">
-            <input type="password" placeholder="Password" name="j_password" ng-model="formData.j_password"/>
-        </label>    
+            <label class="item item-input">
+                <input type="password" placeholder="Password" name="j_password" ng-model="formData.j_password"/>
+            </label>    
 
-        <button type="submit" class="button button-block button-positive">
-            Login
+            <button type="submit" class="button button-block button-positive">
+                Login
+            </button>
+
+            <div class="error">
+                {{loginErrorMessage}}
+            </div>
+        </form>
+    </div>
+
+    <div ng-show="currentLoggedInUser">
+        Logged in as {{currentLoggedInUser}}
+
+        <button ng-click='logout()'>
+            Logout
         </button>
-    </form>
-
-    <pre>
-        {{formData}}
-    </pre>
-
+    </div>
   </ion-content>
 </ion-view>
