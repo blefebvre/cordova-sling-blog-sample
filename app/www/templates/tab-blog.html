@@ -1,5 +1,39 @@
 <ion-view title="Blog">
   <ion-content class="has-header padding">
-    <h1>Blog</h1>
+    <div class="list card" ng-repeat="post in blogPostList">
+        <div class="item">
+            <h2>{{post.title}}</h2>
+            <p>{{post.pubDate}}</p>
+        </div>
+
+        <div class="item item-body">
+        <!-- TODO: image <img class="full-image" src="delorean.jpg"> -->
+        <p>
+            {{description}}
+        </p>
+        <p>
+            <a href="#" class="subdued">0 Comments</a>
+        </p>
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" href="#">
+                <i class="icon ion-chatbox"></i>
+                Comment
+            </a>
+            <a class="tab-item" href="#">
+                <i class="icon ion-share"></i>
+                Share
+            </a>
+        </div>
+
+        </div>
+    </div>
+
+    <div class="list card" ng-hide="connected">
+        <div class="item center">
+            <p>Disconnected - try back later</p>
+        </div>
+    </div>
   </ion-content>
 </ion-view>
