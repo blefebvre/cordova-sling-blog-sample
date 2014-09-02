@@ -42,7 +42,7 @@
   %>
       {
         "title": "<%=post.title%>",
-        "link": "http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=post%>.html",
+        "link": "http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=post%>.json",
         "description": "<%=post.posttext%>",
         "pubDate": "<%=df.format(post.created.getTime())%>"
       }
