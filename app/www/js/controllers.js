@@ -98,4 +98,10 @@ angular.module('starter.controllers', ['starter.services'])
                 });
         };
     }
-]);
+])
+
+.controller('WritePostCtrl', ['$scope', '$http', 'slingHostURI',
+    function($scope, $http, slingHostURI) {
+
+    }
+])

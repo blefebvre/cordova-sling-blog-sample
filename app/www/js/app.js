@@ -48,25 +48,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-    .state('tab.friends', {
-      url: '/friends',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
-        }
-      }
-    })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
-      views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
-        }
-      }
-    })
-
     .state('tab.account', {
       url: '/account',
       views: {
@@ -75,6 +56,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'AccountCtrl'
         }
       }
+    })
+
+    .state('tab.write-post', {
+      url: '/write-post',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/write-post.html',
+          controller: 'WritePostCtrl'
+          }
+        }
     });
 
   // if none of the above states are matched, use this as the fallback
