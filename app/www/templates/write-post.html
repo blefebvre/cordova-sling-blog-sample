@@ -1,5 +1,22 @@
 <ion-view title="Write Post">
   <ion-content class="has-header padding">
-    Write post!
+    <form class="list" ng-submit="processPost()">
+
+      <label class="item item-input">
+        <input type="text" placeholder="Title" ng-model="formData.title" >
+      </label>
+
+      <label class="item item-input">
+        <textarea placeholder="Body" ng-model="formData.posttext"></textarea>
+      </label>
+
+      <div class="button-bar padding-top">
+          <button ng-click="takePicture()" type="button" class="button icon-left ion-camera">Take</button>
+          <button ng-click="choosePicture()" type="button" class="button icon-left ion-image">Choose</button>
+      </div>
+
+      <button type="submit" class="button button-block button-positive">Post</button>
+
+    </form>
   </ion-content>
 </ion-view>

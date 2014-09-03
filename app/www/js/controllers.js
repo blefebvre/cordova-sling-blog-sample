@@ -44,6 +44,8 @@ angular.module('starter.controllers', ['starter.services'])
 
         // Check if user is already logged in
         // TODO: this does not confirm if the session is still valid
+
+        // TODO: session is NOT valid; need to re-log in on resume
         var loggedInUser = localStorage.getItem(LOGGED_IN_USER_ID_KEY);
         if (loggedInUser != null) {
             $scope.currentLoggedInUser = loggedInUser;
@@ -109,6 +111,74 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('WritePostCtrl', ['$scope', '$http', 'slingHostURI',
     function($scope, $http, slingHostURI) {
+        $scope.formData = {};
+
+        // Camera functionality built upon https://github.com/ccoenraets/PictureFeed
+        var cameraDefaultOptions = {
+            quality: 45,
+            targetWidth: 1000,
+            targetHeight: 1000,
+            destinationType: Camera.DestinationType.FILE_URI,
+            encodingType: Camera.EncodingType.JPEG
+        };
+
+        $scope.takePicture = function() {
+            var options = cameraDefaultOptions;
+            options.sourceType = Camera.PictureSourceType.CAMERA;
+
+            navigator.camera.getPicture(
+                function (imageURI) {
+                    console.log(imageURI);
+                    $scope.imageURI = imageURI;
+                },
+                function (message) {
+                    // We typically get here because the use canceled the photo operation. Fail silently.
+                }, options);
+        };
+
+        $scope.choosePicture = function() {
+            var options = cameraDefaultOptions;
+            options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
+
+            navigator.camera.getPicture(
+                function (imageURI) {
+                    console.log(imageURI);
+                    $scope.imageURI = imageURI;
+                },
+                function (message) {
+                    // We typically get here because the use canceled the photo operation. Fail silently.
+                }, options);
+        };
+
+        $scope.processPost = function() {
+            // TODO: handle case where user has not selected an image
+
+            var ft = new FileTransfer(),
+                options = new FileUploadOptions();
+
+            options.fileKey = "attachments/*";
+            options.fileName = 'filename.jpg';
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.params = { // Whatever you populate options.params with, will be available in req.body at the server-side.
+                title: $scope.formData.title || 'Untitled',
+                posttext: $scope.formData.posttext || '',
+                created: ''
+            };
+
+            console.log('Creating post with title: [' + options.params.title 
+                + '], posttext: [' + options.params.posttext 
+                + '] and imageURI: [' + $scope.imageURI + '].');
+
+            ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
+                function (e) {
+                    // TODO: handle success
+                },
+                function (e) {
+                    // TODO: handle failure
+                    alert("Upload failed");
+                }, options);
+        };
 
     }
 ])
