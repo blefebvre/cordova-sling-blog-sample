@@ -42,6 +42,13 @@ angular.module('starter.controllers', ['starter.services'])
         var LOGGED_IN_USER_ID_KEY = "loggedInUserId";
         var LOGGED_IN_USER_PWD_KEY = "loggedInUserPassword";
 
+        // Check if user is already logged in
+        // TODO: this does not confirm if the session is still valid
+        var loggedInUser = localStorage.getItem(LOGGED_IN_USER_ID_KEY);
+        if (loggedInUser != null) {
+            $scope.currentLoggedInUser = loggedInUser;
+        }   
+
         $scope.formData = {
             _charset_: "UTF-8",
             selectedAuthType: "form",
