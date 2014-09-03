@@ -42,14 +42,9 @@ angular.module('starter.controllers', ['starter.services'])
         var LOGGED_IN_USER_ID_KEY = "loggedInUserId";
         var LOGGED_IN_USER_PWD_KEY = "loggedInUserPassword";
 
-        // Check if user is already logged in
         // TODO: this does not confirm if the session is still valid
 
         // TODO: session is NOT valid; need to re-log in on resume
-        var loggedInUser = localStorage.getItem(LOGGED_IN_USER_ID_KEY);
-        if (loggedInUser != null) {
-            $scope.currentLoggedInUser = loggedInUser;
-        }   
 
         $scope.formData = {
             _charset_: "UTF-8",
@@ -106,6 +101,18 @@ angular.module('starter.controllers', ['starter.services'])
                     $scope.loginErrorMessage = data;
                 });
         };
+
+        // Check if user has already authenticated
+        // TODO: do this ONLY on app resume
+        var loggedInUserId = localStorage.getItem(LOGGED_IN_USER_ID_KEY);
+        if (loggedInUserId != null) {
+            var loggedInUserPassword = localStorage.getItem(LOGGED_IN_USER_PWD_KEY);
+            $scope.formData.j_username = loggedInUserId;
+            $scope.formData.j_password = loggedInUserPassword;
+
+            // Authenticate with server
+            login($scope.formData);
+        }   
     }
 ])
 
