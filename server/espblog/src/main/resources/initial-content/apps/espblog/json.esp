@@ -69,7 +69,7 @@
   <%
     df = new java.text.SimpleDateFormat( "EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss", Packages.java.util.Locale.US);
     var counter = 0;
-    while(result && result.hasNext() && counter < 10) {
+    while(result && result.hasNext()) {
 
       counter++;
       post = result.nextNode();
