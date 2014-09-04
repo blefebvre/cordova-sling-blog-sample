@@ -23,6 +23,8 @@
         currentNode = null;
     }    
 
+    var serverURI = "http://" + request.getServerName() + ":" + request.getServerPort();
+
     var result = null;
     if(currentNode) {
        var queryManager = currentNode.getSession().getWorkspace().getQueryManager();  
@@ -39,15 +41,14 @@
         {
             "type": "<%=type%>",
             "name": "<%=attachmentNode.getName()%>",
-            "path": "<%=attachmentNode%>"
+            "path": "<%= serverURI + attachmentNode %>"
         }
         <%
     }
 
     function renderMedia(postNode, mediaFolderName) {
       if(postNode.hasNode(mediaFolderName)) {
-        if(currentNode) {
-          var nodes = currentNode.getNode(mediaFolderName).getNodes();
+          var nodes = postNode.getNode(mediaFolderName).getNodes();
           var first = true;
           for(i in nodes) {
             if (first) {
@@ -59,7 +60,6 @@
             }
             render(nodes[i]);
           }
-        }
       }
     }
 %>
@@ -76,20 +76,18 @@
   %>
       {
         "title": "<%=post.title%>",
-        "link": "http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=post%>.json",
+        "link": "<%= serverURI %><%=post%>.json",
         "description": "<%=post.posttext%>",
         "pubDate": "<%=df.format(post.created.getTime())%>"
 
-        <% if(currentNode) { %>
         ,"resources": {
             "attachments": [ 
-                <% renderMedia(currentNode, "attachments"); %> 
+                <% renderMedia(post, "attachments"); %> 
             ],
             "thumbnails": [
-                <% renderMedia(currentNode, "thumbnails"); %>
+                <% renderMedia(post, "thumbnails"); %>
             ]
         }
-        <% } %>
       }
       <%= result.hasNext() ? "," : "" %>
   <%
