@@ -23,12 +23,45 @@
         currentNode = null;
     }    
 
-   var result = null;
-   if(currentNode) {
+    var result = null;
+    if(currentNode) {
        var queryManager = currentNode.getSession().getWorkspace().getQueryManager();  
        var query = queryManager.createQuery("/jcr:root/content/espblog/posts/element(*, nt:unstructured) order by @created descending", "xpath");
        result = query.execute().getNodes();
-   }       
+    }
+
+    function render(attachmentNode) {
+        var type = "file";
+        if(attachmentNode.getNode("jcr:content").getProperty("jcr:mimeType").getString().substring(0,5) == "image") {
+            type = "image";
+        }
+        %>
+        {
+            "type": "<%=type%>",
+            "name": "<%=attachmentNode.getName()%>",
+            "path": "<%=attachmentNode%>"
+        }
+        <%
+    }
+
+    function renderMedia(postNode, mediaFolderName) {
+      if(postNode.hasNode(mediaFolderName)) {
+        if(currentNode) {
+          var nodes = currentNode.getNode(mediaFolderName).getNodes();
+          var first = true;
+          for(i in nodes) {
+            if (first) {
+                first = false;
+            } else {
+                // for valid JSON, prefix each item with a comma
+                // (excluding the first)
+                %>,<%
+            }
+            render(nodes[i]);
+          }
+        }
+      }
+    }
 %>
   "link": "<%=request.getRequestURL()%>",
   "posts": 
@@ -37,14 +70,26 @@
     df = new java.text.SimpleDateFormat( "EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Packages.java.util.Locale.US);
     var counter = 0;
     while(result && result.hasNext() && counter < 10) {
+
       counter++;
-      post = result.nextNode()
+      post = result.nextNode();
   %>
       {
         "title": "<%=post.title%>",
         "link": "http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=post%>.json",
         "description": "<%=post.posttext%>",
         "pubDate": "<%=df.format(post.created.getTime())%>"
+
+        <% if(currentNode) { %>
+        ,"resources": {
+            "attachments": [ 
+                <% renderMedia(currentNode, "attachments"); %> 
+            ],
+            "thumbnails": [
+                <% renderMedia(currentNode, "thumbnails"); %>
+            ]
+        }
+        <% } %>
       }
       <%= result.hasNext() ? "," : "" %>
   <%
