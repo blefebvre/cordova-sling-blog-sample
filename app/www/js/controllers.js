@@ -33,15 +33,15 @@ angular.module('starter.controllers', ['starter.services'])
     }
 ])
 
-.controller('AccountCtrl', ['$scope', '$rootScope', '$http', 'formDataObject', 'slingHostURI', 'loggedInUserIdKey', 'loggedInUserPwdKey', 'userAuthentication',
-    function($scope, $rootScope, $http, formDataObject, slingHostURI, loggedInUserIdKey, loggedInUserPwdKey, userAuthentication) {
+.controller('AccountCtrl', ['$scope', '$rootScope', '$http', 'formDataObject', 'slingHostURI', 'loggedInUserIdKey', 'loggedInUserPwdKey', 'userCredentialsValidation',
+    function($scope, $rootScope, $http, formDataObject, slingHostURI, loggedInUserIdKey, loggedInUserPwdKey, userCredentialsValidation) {
         $scope.formData = {
             j_username: '',
             j_password: ''
         };
 
         $scope.processLogin = function() {
-            userAuthentication.login($scope.formData.j_username, $scope.formData.j_password,
+            userCredentialsValidation.login($scope.formData.j_username, $scope.formData.j_password,
                 function callback(error, username) {
                     if (error) {
                         $scope.loginErrorMessage = error;
@@ -55,7 +55,7 @@ angular.module('starter.controllers', ['starter.services'])
 
         $scope.logout = function() {
 
-            // TODO: move logout to userAuthentication
+            // TODO: move logout to userCredentialsValidation
             $http.get(slingHostURI + '/system/sling/logout')
                 .success(function(data, status) {
                     console.log('Logout success');
