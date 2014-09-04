@@ -67,7 +67,7 @@
   "posts": 
     [
   <%
-    df = new java.text.SimpleDateFormat( "EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Packages.java.util.Locale.US);
+    df = new java.text.SimpleDateFormat( "EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss", Packages.java.util.Locale.US);
     var counter = 0;
     while(result && result.hasNext() && counter < 10) {
 
@@ -78,9 +78,8 @@
         "title": "<%=post.title%>",
         "link": "<%= serverURI %><%=post%>.json",
         "description": "<%=post.posttext%>",
-        "pubDate": "<%=df.format(post.created.getTime())%>"
-
-        ,"resources": {
+        "pubDate": "<%=df.format(post.created.getTime())%>",
+        "resources": {
             "attachments": [ 
                 <% renderMedia(post, "attachments"); %> 
             ],

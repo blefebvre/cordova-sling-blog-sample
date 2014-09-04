@@ -70,8 +70,8 @@ angular.module('starter.controllers', ['starter.services'])
     }
 ])
 
-.controller('WritePostCtrl', ['$scope', '$http', 'slingHostURI',
-    function($scope, $http, slingHostURI) {
+.controller('WritePostCtrl', ['$scope', '$http', '$state', 'slingHostURI',
+    function($scope, $http, $state, slingHostURI) {
         $scope.formData = {};
 
         // Camera functionality built upon https://github.com/ccoenraets/PictureFeed
@@ -133,7 +133,8 @@ angular.module('starter.controllers', ['starter.services'])
 
             ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
                 function (e) {
-                    // TODO: handle success
+                    alert('Done!');
+                    $state.go('tab.blog');
                 },
                 function (e) {
                     // TODO: handle failure
