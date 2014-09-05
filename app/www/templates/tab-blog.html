@@ -9,7 +9,7 @@
         <div class="item item-body">
             <!-- Exclude non-images -->
             <div ng-repeat="file in post.resources.attachments" ng-if="file.type == 'image'">
-                <img class="full-image" src='{{file.path}}' alt='{{file.name}}' />
+                <img class="full-image" ng-src='{{file.path}}' alt='{{file.name}}' />
             </div>
             
             <p>

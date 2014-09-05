@@ -59,8 +59,8 @@ angular.module('starter.controllers', ['starter.services'])
     }
 ])
 
-.controller('WritePostCtrl', ['$scope', '$http', '$state', 'slingHostURI',
-    function($scope, $http, $state, slingHostURI) {
+.controller('WritePostCtrl', ['$scope', '$http', '$state', 'slingHostURI', 'basicAuthentication',
+    function($scope, $http, $state, slingHostURI, basicAuthentication) {
         $scope.formData = {};
 
         // Camera functionality built upon https://github.com/ccoenraets/PictureFeed
@@ -110,6 +110,9 @@ angular.module('starter.controllers', ['starter.services'])
             options.fileName = 'filename.jpg';
             options.mimeType = "image/jpeg";
             options.chunkedMode = false;
+            options.headers = {
+                Authorization: basicAuthentication.getAuthorizationHeader()
+            };
             options.params = { // Whatever you populate options.params with, will be available in req.body at the server-side.
                 title: $scope.formData.title || 'Untitled',
                 posttext: $scope.formData.posttext || '',
