@@ -33,15 +33,15 @@ angular.module('starter.controllers', ['starter.services'])
     }
 ])
 
-.controller('AccountCtrl', ['$scope', '$rootScope', '$http', 'formDataObject', 'slingHostURI', 'loggedInUserIdKey', 'loggedInUserPwdKey', 'userCredentialsValidation',
-    function($scope, $rootScope, $http, formDataObject, slingHostURI, loggedInUserIdKey, loggedInUserPwdKey, userCredentialsValidation) {
+.controller('AccountCtrl', ['$scope', '$rootScope', '$http', 'formDataObject', 'slingHostURI', 'userAuthentication',
+    function($scope, $rootScope, $http, formDataObject, slingHostURI, userAuthentication) {
         $scope.formData = {
             j_username: '',
             j_password: ''
         };
 
         $scope.processLogin = function() {
-            userCredentialsValidation.login($scope.formData.j_username, $scope.formData.j_password,
+            userAuthentication.login($scope.formData.j_username, $scope.formData.j_password,
                 function callback(error, username) {
                     if (error) {
                         $scope.loginErrorMessage = error;
@@ -54,18 +54,7 @@ angular.module('starter.controllers', ['starter.services'])
         };
 
         $scope.logout = function() {
-
-            // TODO: move logout to userCredentialsValidation
-            $http.get(slingHostURI + '/system/sling/logout')
-                .success(function(data, status) {
-                    console.log('Logout success');
-                    localStorage.removeItem(loggedInUserIdKey);
-                    localStorage.removeItem(loggedInUserPwdKey);
-                    $scope.currentLoggedInUser = null;
-                })
-                .error(function(data, status) {
-                    console.error('Logout failed. Status: [' + status + '], Message: [' + data + '].');
-                });
+            userAuthentication.logout();
         };
     }
 ])
