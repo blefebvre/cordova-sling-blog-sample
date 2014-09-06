@@ -87,12 +87,19 @@ angular.module('starter.services', [])
 // Based on http://wemadeyoulook.at/en/blog/implementing-basic-http-authentication-http-requests-angular/
 .factory('basicAuthentication', ['Base64', '$http', 'basicAuthDataKey',
     function (Base64, $http, basicAuthDataKey) {
-        var getBasicHeader = function() {
-            return 'Basic ' + localStorage.getItem(basicAuthDataKey);
+
+        var getStoredCredentials = function() {
+            return localStorage.getItem(basicAuthDataKey);
         };
 
-        // initialize to whatever is in localStorage, if anything
-        $http.defaults.headers.common.Authorization = getBasicHeader();
+        var getBasicHeader = function() {
+            return 'Basic ' + getStoredCredentials();
+        };
+
+        // Set the header if credentials are available
+        if (getStoredCredentials()) {
+            $http.defaults.headers.common.Authorization = getBasicHeader();
+        }
      
         return {
             setCredentials: function (username, password) {
