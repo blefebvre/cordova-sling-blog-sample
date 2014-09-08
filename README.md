@@ -91,9 +91,9 @@ Check out the [Cordova CLI](https://cordova.apache.org/docs/en/3.5.0/guide_cli_i
 
 Alternatively, use [PhoneGap Build](https://build.phonegap.com/) to build the app for a number of platforms in the cloud (note: some platforms require keys to be uploaded beforehand):
 
-# Log in to PhoneGap build using your Adobe ID
-# Tap the '+ new app' button
-# Enter the URL to this github repository (https://github.com/blefebvre/cordova-sling-blog-sample)
-# Tap 'Pull from .git repository'
-# When it finishes fetching, tap 'Ready to build'
-# Once each platform finishes compiling you may scan the QR code with a device to download and install your app.
+1. Log in to PhoneGap build using your Adobe ID
+2. Tap the '+ new app' button
+3. Enter the URL to this github repository (https://github.com/blefebvre/cordova-sling-blog-sample)
+4. Tap 'Pull from .git repository'
+5. When it finishes fetching, tap 'Ready to build'
+6. Once each platform finishes compiling you may scan the QR code with a device to download and install your app.
