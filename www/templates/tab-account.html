@@ -21,15 +21,22 @@
     </div>
 
     <div ng-show="currentLoggedInUser">
-        Logged in as {{currentLoggedInUser}}
+        <div class="list card">
 
-        <button ng-click='logout()'>
-            Logout
-        </button>
+            <div class="item item-divider">
+                Logged in as {{currentLoggedInUser}}
+            </div>
 
-        <div>
-            <a href="#/tab/write-post">Write a new post</a>
+            <a href="#/tab/write-post" class="item item-icon-left">
+                <i class="icon ion-ios7-plus-outline"></i>
+                New post
+            </a>
+            <a href="#" ng-click='logout()' class="item item-icon-left">
+                <i class="icon ion-log-out"></i>
+                Log out
+            </a>
         </div>
+        
     </div>
   </ion-content>
 </ion-view>
