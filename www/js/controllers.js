@@ -101,37 +101,43 @@ angular.module('starter.controllers', ['starter.services'])
         };
 
         $scope.processPost = function() {
-            // TODO: handle case where user has not selected an image
+            if (!$scope.imageURI) {
+                // User has not selected an image
+                alert('Please choose an image');
+                // TODO: handle this case
+            }
+            else {
+                // User has selected an image
+                var ft = new FileTransfer(),
+                    options = new FileUploadOptions();
 
-            var ft = new FileTransfer(),
-                options = new FileUploadOptions();
+                options.fileKey = "attachments/*";
+                options.fileName = 'filename.jpg';
+                options.mimeType = "image/jpeg";
+                options.chunkedMode = false;
+                options.headers = {
+                    Authorization: basicAuthentication.getAuthorizationHeader()
+                };
+                options.params = { // Whatever you populate options.params with, will be available in req.body at the server-side.
+                    title: $scope.formData.title || 'Untitled',
+                    posttext: $scope.formData.posttext || '',
+                    created: ''
+                };
 
-            options.fileKey = "attachments/*";
-            options.fileName = 'filename.jpg';
-            options.mimeType = "image/jpeg";
-            options.chunkedMode = false;
-            options.headers = {
-                Authorization: basicAuthentication.getAuthorizationHeader()
-            };
-            options.params = { // Whatever you populate options.params with, will be available in req.body at the server-side.
-                title: $scope.formData.title || 'Untitled',
-                posttext: $scope.formData.posttext || '',
-                created: ''
-            };
+                console.log('Creating post with title: [' + options.params.title 
+                    + '], posttext: [' + options.params.posttext 
+                    + '] and imageURI: [' + $scope.imageURI + '].');
 
-            console.log('Creating post with title: [' + options.params.title 
-                + '], posttext: [' + options.params.posttext 
-                + '] and imageURI: [' + $scope.imageURI + '].');
-
-            ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
-                function (e) {
-                    alert('Done!');
-                    $state.go('tab.blog');
-                },
-                function (e) {
-                    // TODO: handle failure
-                    alert("Upload failed");
-                }, options);
+                ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
+                    function (e) {
+                        alert('Done!');
+                        $state.go('tab.blog');
+                    },
+                    function (e) {
+                        // TODO: handle failure
+                        alert("Upload failed");
+                    }, options);
+            }
         };
 
     }
