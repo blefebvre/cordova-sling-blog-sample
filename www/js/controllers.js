@@ -130,15 +130,25 @@ angular.module('starter.controllers', ['starter.services'])
 
                 ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
                     function (e) {
-                        alert('Done!');
-                        $state.go('tab.blog');
+                        navigator.notification.alert('Done!',
+                            function cb() {
+                                $state.go('tab.blog');
+                            },
+                            'Upload status',
+                            'Check it out'
+                        );
                     },
                     function (e) {
                         // TODO: handle failure
-                        alert("Upload failed");
+                        navigator.notification.alert('Error: Upload failed.',
+                            function cb() {
+                                // No-op
+                            },
+                            'Upload status',
+                            'Try again'
+                        );
                     }, options);
             }
         };
-
     }
 ])
