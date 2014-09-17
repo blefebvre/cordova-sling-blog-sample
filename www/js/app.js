@@ -48,6 +48,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
+    .state('tab.blog-comment', {
+      url: '/blog-comment',
+      views: {
+        'tab-blog': {
+          templateUrl: 'templates/blog-comment.html',
+          controller: 'BlogCommentCtrl'
+          }
+        }
+    })
+
     .state('tab.account', {
       url: '/account',
       views: {

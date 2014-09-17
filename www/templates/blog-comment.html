@@ -1,6 +1,6 @@
-<ion-view title="Sling Blog">
+<ion-view title="Write a comment">
   <ion-content class="has-header padding">
-    <div class="list card" ng-repeat="post in blogPostList">
+    <div class="list card">
         <div class="item">
             <h2>{{post.title}}</h2>
             <p>{{post.pubDate}}</p>
@@ -20,24 +20,6 @@
             </p>
         </div>
 
-        <div class="item tabs tabs-secondary tabs-icon-left">
-            <a class="tab-item" href="#/tab/blog-comment">
-                <i class="icon ion-chatbox"></i>
-                Comment
-            </a>
-            <a class="tab-item" href="#">
-                <i class="icon ion-share"></i>
-                Share
-            </a>
-        </div>
-
-        </div>
-    </div>
-
-    <div class="list card" ng-hide="connected">
-        <div class="item center">
-            <p>Disconnected - try back later</p>
-        </div>
     </div>
   </ion-content>
 </ion-view>

@@ -152,3 +152,9 @@ angular.module('starter.controllers', ['starter.services'])
         };
     }
 ])
+
+.controller('BlogCommentCtrl', ['$scope', '$http', '$state', 'slingHostURI', 'basicAuthentication',
+    function($scope, $http, $state, slingHostURI, basicAuthentication) {
+
+    }
+])
