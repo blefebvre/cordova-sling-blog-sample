@@ -3,7 +3,7 @@
 angular.module('starter.services', [])
 
 // Sling instance hostname
-.constant('slingHostURI', 'http://localhost:8080')
+.constant('slingHostURI', 'http://162.243.71.186:8092')
 .constant('loggedInUserIdKey', 'loggedInUserId')
 .constant('basicAuthDataKey', 'basicAuthData')
 
