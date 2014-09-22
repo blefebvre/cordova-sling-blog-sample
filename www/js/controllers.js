@@ -59,8 +59,8 @@ angular.module('starter.controllers', ['starter.services'])
     }
 ])
 
-.controller('WritePostCtrl', ['$scope', '$http', '$state', 'slingHostURI', 'basicAuthentication',
-    function($scope, $http, $state, slingHostURI, basicAuthentication) {
+.controller('WritePostCtrl', ['$scope', '$http', '$state', 'slingHostURI', 'basicAuthentication', 'formDataObject',
+    function($scope, $http, $state, slingHostURI, basicAuthentication, formDataObject) {
         $scope.formData = {};
 
         // Camera functionality built upon https://github.com/ccoenraets/PictureFeed
@@ -100,11 +100,51 @@ angular.module('starter.controllers', ['starter.services'])
                 }, options);
         };
 
+        var postSuccess = function() {
+            navigator.notification.alert('Done!',
+                function cb() {
+                    $state.go('tab.blog');
+                },
+                'Upload status',
+                'Check it out'
+            );
+        };
+
+        var postFail = function() {
+            // TODO: handle failure
+            navigator.notification.alert('Error: Upload failed.',
+                function cb() {
+                    // No-op
+                },
+                'Upload status',
+                'Try again'
+            );
+        };
+
         $scope.processPost = function() {
             if (!$scope.imageURI) {
                 // User has not selected an image
-                alert('Please choose an image');
-                // TODO: handle this case
+                var formData = {
+                    title: $scope.formData.title || 'Untitled',
+                    posttext: $scope.formData.posttext || '',
+                    created: ''
+                };
+
+                $http({
+                    method: 'POST',
+                    url: slingHostURI + "/content/espblog/posts/*.edit.html", 
+                    data: formData,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: formDataObject
+                })
+                    .success(function(data, status) {
+                        postSuccess();   
+                    })
+                    .error(function(data, status) {
+                        postFail();
+                    });
             }
             else {
                 // User has selected an image
@@ -130,23 +170,10 @@ angular.module('starter.controllers', ['starter.services'])
 
                 ft.upload($scope.imageURI, slingHostURI + "/content/espblog/posts/*.edit.html",
                     function (e) {
-                        navigator.notification.alert('Done!',
-                            function cb() {
-                                $state.go('tab.blog');
-                            },
-                            'Upload status',
-                            'Check it out'
-                        );
+                        postSuccess();
                     },
                     function (e) {
-                        // TODO: handle failure
-                        navigator.notification.alert('Error: Upload failed.',
-                            function cb() {
-                                // No-op
-                            },
-                            'Upload status',
-                            'Try again'
-                        );
+                        postFail();
                     }, options);
             }
         };
